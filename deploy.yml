@@ -1,0 +1,18 @@
+---
+- name: deploy tomcat8 based application sample java application
+  become: yes
+  hosts: all
+  tasks:
+    - name: update ubuntu packages and install java
+      apt:
+        name: openjdk-8-jdk
+        update_cache: yes
+        state: present
+    - name: install tomcat8
+      apt: 
+        name: tomcat8
+        state: present
+    - name: Deploy jar file into tomacat
+      copy:
+        src: /var/lib/jenkins/workspace/sonarqube/target/my-app-1.0-SNAPSHOT.jar
+        dest: /var/lib/tomcat8/webapps/
